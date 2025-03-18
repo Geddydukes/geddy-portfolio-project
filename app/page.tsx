@@ -9,7 +9,7 @@ const projects = [
     description:
       "Developed a full-stack web application that leverages AI to provide personalized date suggestions and planning. Built with Next.js, features include smart reminders, preference matching, and AI-powered recommendations.",
     technologies: ["Next.js", "AI Integration", "React", "TypeScript", "Tailwind CSS"],
-    link: "https://courtedai.lovable.app/",
+    link: "https://courtedai.com",
   },
   {
     title: "Equity Scorecard Web Portal",
