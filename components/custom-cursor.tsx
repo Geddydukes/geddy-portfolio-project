@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react"
 
+import styles from "./custom-cursor.module.css"
+
 export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 })
 
@@ -17,7 +19,7 @@ export default function CustomCursor() {
 
   return (
     <div
-      className="fixed top-0 left-0 w-6 h-6 rounded-full bg-white mix-blend-difference pointer-events-none z-50 transition-transform duration-100 ease-out"
+      className={styles.cursor}
       style={{
         transform: `translate(${position.x - 12}px, ${position.y - 12}px)`,
       }}

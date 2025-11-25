@@ -1,0 +1,88 @@
+.card {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 4px solid hsl(var(--primary));
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    color: hsl(var(--foreground));
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+}
+
+.role {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.company {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+.meta {
+    text-align: right;
+}
+
+.range {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+.location {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+.bullets {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+.bullet {
+    margin-bottom: 0.5rem;
+}
+
+.highlightWrapper {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.highlightBadge {
+    display: inline-block;
+    background-color: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.highlightText {
+    font-size: 0.875rem;
+    font-style: italic;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}

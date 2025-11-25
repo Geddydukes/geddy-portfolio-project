@@ -1,0 +1,90 @@
+.pageWrapper {
+    min-height: 100vh;
+    color: hsl(var(--foreground));
+}
+
+.section {
+    padding: 5rem 0;
+}
+
+.sectionTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-align: center;
+    letter-spacing: -0.02em;
+}
+
+.projectsGrid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .projectsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .projectsGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.experienceWrapper {
+    max-width: 56rem;
+    /* max-w-4xl */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.skillsGrid {
+    display: grid;
+    gap: 2rem;
+    max-width: 72rem;
+    /* max-w-6xl */
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .skillsGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.contactWrapper {
+    text-align: center;
+    max-width: 42rem;
+    /* max-w-2xl */
+    margin: 0 auto;
+}
+
+.tagline {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.socialLinks {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.socialLink {
+    color: hsl(var(--muted-foreground));
+    transition: color 0.2s ease;
+}
+
+.socialLink:hover {
+    color: hsl(var(--primary));
+}
+
+.contactInfo {
+    margin-top: 2rem;
+    color: hsl(var(--muted-foreground));
+}

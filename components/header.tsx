@@ -1,11 +1,21 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
+import styles from "./header.module.css"
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -16,16 +26,16 @@ export default function Header() {
   }
 
   return (
-    <header className="fixed w-full z-10 bg-transparent">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold">
+    <header className={`${styles.header} ${scrolled ? styles.headerScrolled : ""}`}>
+      <div className={styles.container}>
+        <Link href="/" className={styles.logo}>
           <motion.span initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             Geddy Dukes
           </motion.span>
         </Link>
-        <div className="md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)} className="text-white focus:outline-none">
-            <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
+        <div className={styles.mobileButton}>
+          <button onClick={() => setIsOpen(!isOpen)} className={styles.mobileButton}>
+            <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24" width="24" height="24">
               {isOpen ? (
                 <path
                   fillRule="evenodd"
@@ -41,8 +51,8 @@ export default function Header() {
             </svg>
           </button>
         </div>
-        <nav className={`${isOpen ? "block" : "hidden"} md:block`}>
-          <ul className="md:flex md:space-x-8">
+        <nav className={`${styles.nav} ${isOpen ? styles.navOpen : ""}`}>
+          <ul className={styles.navList}>
             {["Home", "Projects", "Experience", "Skills", "Contact"].map((item, index) => (
               <motion.li
                 key={item}
@@ -52,7 +62,7 @@ export default function Header() {
               >
                 <button
                   onClick={() => scrollToSection(item.toLowerCase())}
-                  className="hover:text-primary transition-colors duration-200"
+                  className={styles.navButton}
                 >
                   {item}
                 </button>

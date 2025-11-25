@@ -1,39 +1,54 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { ExternalLink } from "lucide-react"
+import { ExternalLink, Github, Globe, Package } from "lucide-react"
+import { Project } from "@/content/portfolio"
+import styles from "./project-card.module.css"
 
-interface ProjectCardProps {
-  title: string
-  description: string
-  technologies: string[]
-  link: string
-}
-
-export default function ProjectCard({ title, description, technologies, link }: ProjectCardProps) {
+export default function ProjectCard({ name, tagline, status, stack, summary, highlights, links, featured }: Project) {
   return (
-    <Card className="h-full flex flex-col bg-gray-800 text-white">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <div className="flex flex-wrap gap-2 mt-2">
-          {technologies.map((tech) => (
-            <Badge key={tech} variant="secondary">
+    <div className={styles.card}>
+      <div className={styles.header}>
+        <div className={styles.titleRow}>
+          <h3 className={styles.title}>{name}</h3>
+          <span className={`${styles.badge} ${status === "live" ? styles.badgeLive : styles.badgeSecondary}`}>
+            {status}
+          </span>
+        </div>
+        <p className={styles.tagline}>{tagline}</p>
+        <div className={styles.stack}>
+          {stack.map((tech) => (
+            <span key={tech} className={styles.stackBadge}>
               {tech}
-            </Badge>
+            </span>
           ))}
         </div>
-      </CardHeader>
-      <CardContent className="flex-grow">
-        <p>{description}</p>
-      </CardContent>
-      <div className="p-4 mt-auto">
-        <Button asChild variant="default" className="w-full bg-primary hover:bg-primary/90 text-white font-semibold">
-          <a href={link} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2">
-            View Project <ExternalLink className="h-4 w-4" />
-          </a>
-        </Button>
       </div>
-    </Card>
+      <div className={styles.content}>
+        <p className={styles.summary}>{summary}</p>
+        {highlights && highlights.length > 0 && (
+          <ul className={styles.highlights}>
+            {highlights.map((highlight, index) => (
+              <li key={index}>{highlight}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <div className={styles.footer}>
+        {links.map((link, index) => (
+          <a
+            key={index}
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.linkButton}
+          >
+            {link.type === "github" && <Github className="h-4 w-4" />}
+            {link.type === "npm" && <Package className="h-4 w-4" />}
+            {link.type === "site" && <Globe className="h-4 w-4" />}
+            {link.type === "demo" && <ExternalLink className="h-4 w-4" />}
+            {link.label || (link.type.charAt(0).toUpperCase() + link.type.slice(1))}
+          </a>
+        ))}
+      </div>
+    </div>
   )
 }
 
