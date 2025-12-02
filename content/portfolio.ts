@@ -2,7 +2,7 @@ export const me = {
     name: "Geddy Dukes",
     title: "AI Systems Engineer • Technical Program Manager • Builder",
     tagline:
-        "I design and ship auditable, AI-native systems — from neuro-symbolic reasoning and agent runtimes to multimodal world models and finance platforms.",
+        "AI/ML systems engineer who builds production ML infrastructure from first principles. Implemented a 67M-parameter language model from scratch, multimodal self-supervised learning systems (JEPA/CPC), and neuro-symbolic AI frameworks. Published open-source agent runtime on npm. Deep experience in full-stack development, LLM orchestration, and production deployment. Domain expertise in financial systems, real estate, and regulated environments.",
     location: "San Francisco Bay Area, CA (remote-friendly)",
     email: "geddydukes@gmail.com",
     phone: "(707) 799-1271",
@@ -87,88 +87,109 @@ export const experience: ExperienceItem[] = [
 
 export type Project = {
     slug: string;
+    category: string;
     name: string;
     tagline: string;
     status: "live" | "deploying" | "private-beta" | "ready-to-publish" | "archive";
     stack: string[];
     summary: string;
     highlights: string[];
-    links: { type: "github" | "npm" | "docs" | "demo" | "site"; href: string; label?: string }[];
+    links: { type: "github" | "npm" | "docs" | "demo" | "site" | "blog"; href: string; label?: string }[];
     featured?: boolean;
 };
 
 export const projects: Project[] = [
+    // Deep Learning Research
     {
-        slug: "hydra",
-        name: "Hydra System",
-        tagline: "Neuro-symbolic reasoning with auditable agent flows",
-        status: "deploying",
-        stack: ["Python", "FastAPI", "PostgreSQL", "pgvector", "Redis"],
-        summary:
-            "Hybrid multi-agent framework that composes deterministic symbolic rules with LLM agents for explainable, traceable decisions in regulated contexts.",
-        highlights: [
-            "Dynamic rule graphs + agent coordination",
-            "Retrieval memory + model routing",
-            "Deterministic–LLM hybrid control flows with audit trails",
-        ],
-        links: [
-            { type: "github", href: "https://github.com/Geddydukes/Hydra_system" },
-            // Add demo/docs when ready
-        ],
-        featured: true,
-    },
-    {
-        slug: "feather-agent",
-        name: "Feather Agent Runtime",
-        tagline: "Provider-agnostic agent orchestration runtime (open source)",
+        slug: "tiny-llm",
+        category: "Deep Learning Research",
+        name: "TinyLLM - Language Model from Scratch",
+        tagline: "67M parameter transformer with continual learning system",
         status: "live",
-        stack: ["TypeScript", "Node.js"],
-        summary:
-            "Open-source runtime for stateful agents, tool execution, model routing, and transparent streaming plans with config-driven state/behavior/lifecycle.",
-        highlights: ["Structured returns", "Robust error handling", "npm package: feather-agent"],
+        stack: ["Python", "PyTorch", "WandB"],
+        summary: "Implemented a 67M parameter transformer from scratch, featuring a custom continual learning system to prevent catastrophic forgetting.",
+        highlights: ["67M Parameters", "Continual Learning", "Transformer Architecture"],
         links: [
-            { type: "github", href: "https://github.com/Geddydukes/feather-agent" },
-            { type: "npm", href: "https://www.npmjs.com/package/feather-agent", label: "npm" },
+            { type: "github", href: "https://github.com/Geddydukes/TinyLLM", label: "GitHub" },
+            { type: "demo", href: "#", label: "Demo" },
+            { type: "blog", href: "#", label: "Blog Post" },
         ],
         featured: true,
     },
     {
         slug: "world-model-poc",
-        name: "World Model POC",
-        tagline: "Multimodal self-supervised learning with episodic memory",
+        category: "Deep Learning Research",
+        name: "World Model - Multimodal Self-Supervised Learning",
+        tagline: "JEPA + CPC + CLIP implementation with episodic memory",
         status: "live",
         stack: ["Python", "PyTorch", "JEPA", "CPC", "NumPy"],
         summary:
             "Vision–audio contrastive learning with episodic memory; nightly training/validation and rollout evaluation to test temporal dynamics and embedding coherence.",
-        highlights: ["Temporal retrieval", "Automated pipelines", "Rollout evaluation"],
-        links: [{ type: "github", href: "https://github.com/Geddydukes/world-model-poc" }],
+        highlights: ["JEPA + CPC + CLIP", "Episodic Memory", "Self-Supervised"],
+        links: [
+            { type: "github", href: "https://github.com/Geddydukes/world-model-poc", label: "GitHub" },
+            { type: "demo", href: "#", label: "Demo" },
+            { type: "docs", href: "#", label: "Technical Doc" },
+        ],
+        featured: true,
+    },
+
+    // AI Infrastructure & Frameworks
+    {
+        slug: "daedelos",
+        category: "AI Infrastructure & Frameworks",
+        name: "Daedelos SDK - Neuro-Symbolic AI Platform",
+        tagline: "Enterprise AI governance with audit trails and hybrid reasoning",
+        status: "deploying",
+        stack: ["Python", "FastAPI", "PostgreSQL", "pgvector", "Redis"],
+        summary:
+            "Hybrid multi-agent framework that composes deterministic symbolic rules with LLM agents for explainable, traceable decisions in regulated contexts.",
+        highlights: ["Neuro-Symbolic", "Audit Trails", "Hybrid Reasoning"],
+        links: [
+            { type: "github", href: "https://github.com/Geddydukes/Hydra_system", label: "GitHub" },
+            { type: "docs", href: "#", label: "Documentation" },
+            { type: "docs", href: "#", label: "Architecture" },
+        ],
         featured: true,
     },
     {
-        slug: "wisely",
-        name: "Wisely (LearningAccelerator)",
-        tagline: "Multi-agent personalized learning engine",
-        status: "private-beta",
-        stack: ["TypeScript", "Supabase"],
+        slug: "feather-agent",
+        category: "AI Infrastructure & Frameworks",
+        name: "Feather Agent - Open-Source Agent Runtime",
+        tagline: "Provider-agnostic agent framework (published on npm)",
+        status: "live",
+        stack: ["TypeScript", "Node.js"],
         summary:
-            "Adaptive learning orchestrated by role agents (CLO/Instructor/TA) with explainable checkpoints and progress tracking.",
-        highlights: ["Agent orchestration", "Adaptive paths", "Explainable milestones"],
-        links: [],
+            "Open-source runtime for stateful agents, tool execution, model routing, and transparent streaming plans with config-driven state/behavior/lifecycle.",
+        highlights: ["Provider-Agnostic", "npm Package", "Agent Runtime"],
+        links: [
+            { type: "npm", href: "https://www.npmjs.com/package/feather-agent", label: "npm Package" },
+            { type: "github", href: "https://github.com/Geddydukes/feather-agent", label: "GitHub" },
+            { type: "docs", href: "#", label: "API Docs" },
+        ],
         featured: true,
     },
+
+    // Full Stack Applications
     {
-        slug: "safemama",
-        name: "SafeMama",
-        tagline: "Pregnancy-safety ingredient scanner (launch-ready)",
-        status: "ready-to-publish",
-        stack: ["React Native", "Supabase", "Stripe"],
+        slug: "audio-routing-sim",
+        category: "Full Stack Applications",
+        name: "Audio Routing System - Hybrid ML + Rules",
+        tagline: "Intelligent audio classification and dynamic stem routing",
+        status: "live",
+        stack: ["Python", "DSP/ML"],
         summary:
-            "Mobile app that checks ingredient safety during pregnancy. Built and tested; pending App Store listing.",
-        highlights: ["On-device UX", "Content classification", "Launch-ready build"],
-        links: [],
+            "Ingests multi-track audio events (speech/SFX/music), classifies via rule + ML, and dynamically routes stems through a virtual post-production graph.",
+        highlights: ["Hybrid ML + Rules", "Dynamic Routing", "Audio Classification"],
+        links: [
+            { type: "github", href: "https://github.com/Geddydukes/Audio_routing_sim", label: "GitHub" },
+            { type: "docs", href: "#", label: "Technical Overview" },
+        ],
+        featured: true,
     },
     {
         slug: "financial-platform",
+        category: "Full Stack Applications",
         name: "Financial Analysis Platform",
         tagline: "Real-time underwriting metrics with RBAC + audit",
         status: "live",
@@ -177,39 +198,7 @@ export const projects: Project[] = [
             "Underwriting workflow platform processing millions in loan volume; 15+ metrics with sub-second latency, RBAC, audit logs, and secure APIs.",
         highlights: ["Sub-second calc engine", "Compliance-ready", "Used in production"],
         links: [],
-    },
-    {
-        slug: "audio-routing-sim",
-        name: "Audio Routing Simulator",
-        tagline: "Deterministic + learnable audio event routing",
-        status: "live",
-        stack: ["Python", "DSP/ML"],
-        summary:
-            "Ingests multi-track audio events (speech/SFX/music), classifies via rule + ML, and dynamically routes stems through a virtual post-production graph.",
-        highlights: ["Multimodal reasoning", "Classification + routing", "Real-time-friendly design"],
-        links: [{ type: "github", href: "https://github.com/Geddydukes/Audio_routing_sim" }],
-    },
-    {
-        slug: "media-ingest-search",
-        name: "Media Metadata Ingest & Search",
-        tagline: "Audio feature extraction + lightning-fast tagging/search",
-        status: "live",
-        stack: ["PostgreSQL", "Redis", "REST/gRPC"],
-        summary:
-            "Cloud-first pipeline: ingest audio + sidecar metadata, extract technical/musical features, store in Postgres + Redis, expose APIs for fast search and tagging.",
-        highlights: ["Feature extraction", "Indexing & search", "Production-ready API surface"],
-        links: [{ type: "github", href: "https://github.com/Geddydukes/Media_metadata_ingest_search" }],
-    },
-    {
-        slug: "forever-context",
-        name: "Forever Context Memory Store",
-        tagline: "Long-horizon memory inspired by human recall",
-        status: "live",
-        stack: ["TypeScript"],
-        summary:
-            "Long-term memory store for agentic systems; supports embeddings and retrieval policies for 'forever context' personalization.",
-        highlights: ["Embedding memory", "Retrieval policies", "Agent-ready interfaces"],
-        links: [{ type: "github", href: "https://github.com/Geddydukes/Forever-context-Memory-Store" }],
+        featured: true,
     },
 ];
 

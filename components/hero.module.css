@@ -27,11 +27,11 @@
 }
 
 .heroSubtitle {
-    font-size: 1.25rem;
+    font-size: .2rem;
     color: hsl(var(--muted-foreground));
-    max-width: 40rem;
-    margin-bottom: 2.5rem;
-    line-height: 1.6;
+    max-width: 60rem;
+    margin: 0 auto 2.5rem auto;
+    line-height: 1.4;
 }
 
 @media (min-width: 768px) {
@@ -43,6 +43,7 @@
 .ctaButtons {
     display: flex;
     gap: 1rem;
+    justify-content: center;
 }
 
 .primaryButton {

@@ -1,4 +1,4 @@
-import { ExternalLink, Github, Globe, Package } from "lucide-react"
+import { ExternalLink, Github, Globe, Package, BookOpen, FileText } from "lucide-react"
 import { Project } from "@/content/portfolio"
 import styles from "./project-card.module.css"
 
@@ -44,6 +44,8 @@ export default function ProjectCard({ name, tagline, status, stack, summary, hig
             {link.type === "npm" && <Package className="h-4 w-4" />}
             {link.type === "site" && <Globe className="h-4 w-4" />}
             {link.type === "demo" && <ExternalLink className="h-4 w-4" />}
+            {link.type === "docs" && <BookOpen className="h-4 w-4" />}
+            {link.type === "blog" && <FileText className="h-4 w-4" />}
             {link.label || (link.type.charAt(0).toUpperCase() + link.type.slice(1))}
           </a>
         ))}

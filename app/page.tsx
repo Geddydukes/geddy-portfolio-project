@@ -15,10 +15,22 @@ export default function Home() {
       <section id="projects" className={styles.section}>
         <div className="container">
           <h2 className={styles.sectionTitle}>Featured Projects</h2>
-          <div className={styles.projectsGrid}>
-            {projects.map((project, index) => (
-              <ProjectCard key={index} {...project} />
-            ))}
+          <div className={styles.projectsWrapper}>
+            {["Deep Learning Research", "AI Infrastructure & Frameworks", "Full Stack Applications"].map((category) => {
+              const categoryProjects = projects.filter((p) => p.category === category)
+              if (categoryProjects.length === 0) return null
+
+              return (
+                <div key={category} className={styles.categorySection}>
+                  <h3 className={styles.categoryTitle}>{category}</h3>
+                  <div className={styles.projectsGrid}>
+                    {categoryProjects.map((project, index) => (
+                      <ProjectCard key={index} {...project} />
+                    ))}
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -50,7 +62,7 @@ export default function Home() {
           <div className={styles.contactWrapper}>
             <h2 className={styles.sectionTitle}>Get In Touch</h2>
             <p className={styles.tagline}>
-              {me.tagline}
+              Open to in person roles in the SF Bay Area and remote opportunities
             </p>
             <div className={styles.socialLinks}>
               <a
@@ -79,9 +91,7 @@ export default function Home() {
                 <Github className="h-10 w-10" />
               </a>
             </div>
-            <p className={styles.contactInfo}>
-              {me.location} • {me.phone}
-            </p>
+
           </div>
         </div>
       </section>
