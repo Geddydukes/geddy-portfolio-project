@@ -27,7 +27,7 @@
 }
 
 .heroSubtitle {
-    font-size: .2rem;
+    font-size: 1rem;
     color: hsl(var(--muted-foreground));
     max-width: 60rem;
     margin: 0 auto 2.5rem auto;
