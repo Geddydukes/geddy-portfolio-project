@@ -1,6 +1,6 @@
 export const me = {
     name: "Geddy Dukes",
-    title: "AI Systems Engineer • Technical Program Manager • Builder",
+    title: "AI/ML Engineer",
     tagline:
         "AI/ML systems engineer who builds production ML infrastructure from first principles. Implemented a 67M-parameter language model from scratch, multimodal self-supervised learning systems (JEPA/CPC), and neuro-symbolic AI frameworks. Published open-source agent runtime on npm. Deep experience in full-stack development, LLM orchestration, and production deployment. Domain expertise in financial systems, real estate, and regulated environments.",
     location: "San Francisco Bay Area, CA (remote-friendly)",
