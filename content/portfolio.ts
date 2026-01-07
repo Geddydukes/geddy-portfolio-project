@@ -169,6 +169,22 @@ export const projects: Project[] = [
         ],
         featured: true,
     },
+    {
+        slug: "agentbench",
+        category: "AI Infrastructure & Frameworks",
+        name: "agentbench – Open-Source Agent Evaluation Framework",
+        tagline: "Framework for benchmarking LLM and tool-using agents",
+        status: "live",
+        stack: ["Python", "AsyncIO"],
+        summary:
+            "Framework for benchmarking LLM and tool-using agents. Supports async execution, retries, rate limits, composite judges, JSONL artifacts, traces, and HTML reports.",
+        highlights: ["Agent Benchmarking", "Open Source", "Python Package", "Report Generation"],
+        links: [
+            { type: "github", href: "https://github.com/Geddydukes/agentbench", label: "GitHub" },
+            { type: "docs", href: "https://pypi.org/project/agentbench/", label: "PyPI" },
+        ],
+        featured: true,
+    },
 
     // Full Stack Applications
     {
