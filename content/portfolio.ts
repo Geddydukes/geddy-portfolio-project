@@ -91,7 +91,7 @@ export type Project = {
     stack: string[];
     summary: string;
     highlights: string[];
-    links: { type: "github" | "npm" | "docs" | "demo" | "site" | "blog"; href: string; label?: string }[];
+    links: { type: "github" | "npm" | "docs" | "demo" | "site" | "blog" | "pypi"; href: string; label?: string }[];
     featured?: boolean;
 };
 

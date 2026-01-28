@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import styles from "./header.module.css"
@@ -8,6 +9,8 @@ import styles from "./header.module.css"
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
+  const isHomePage = pathname === "/"
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +24,22 @@ export default function Header() {
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
+    }
+    setIsOpen(false)
+  }
+
+  const handleNavClick = (item: string) => {
+    const sectionId = item.toLowerCase()
+
+    if (!isHomePage) {
+      // Navigate to homepage with hash
+      window.location.href = sectionId === "home" ? "/" : `/#${sectionId}`
+    } else {
+      if (sectionId === "home") {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+      } else {
+        scrollToSection(sectionId)
+      }
     }
     setIsOpen(false)
   }
@@ -61,7 +80,7 @@ export default function Header() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <button
-                  onClick={() => scrollToSection(item.toLowerCase())}
+                  onClick={() => handleNavClick(item)}
                   className={styles.navButton}
                 >
                   {item}
