@@ -138,22 +138,38 @@ ${escapedContent}
 
         // Find the blogPosts array and insert the new post at the beginning
         let blogFileContent = fileData.content;
-        const arrayStartPattern = /export const blogPosts: BlogPost\[\] = \[/;
+
+        // More robust pattern to find the array - handles different formatting
+        const arrayStartPattern = /export\s+const\s+blogPosts\s*:\s*BlogPost\s*\[\s*\]\s*=\s*\[/;
         const match = blogFileContent.match(arrayStartPattern);
 
-        if (!match) {
+        if (!match || match.index === undefined) {
             return NextResponse.json(
                 { error: 'Could not find blogPosts array in blog.ts' },
                 { status: 500 }
             );
         }
 
-        // Insert the new post right after the array opening
-        const insertPosition = blogFileContent.indexOf('[', match.index!) + 1;
-        blogFileContent =
-            blogFileContent.slice(0, insertPosition) +
-            '\n' + newPost +
-            blogFileContent.slice(insertPosition);
+        // Find the opening bracket position
+        const matchEndPosition = match.index + match[0].length;
+
+        // Check if the array is empty or has existing content
+        const afterMatch = blogFileContent.slice(matchEndPosition).trimStart();
+
+        if (afterMatch.startsWith(']')) {
+            // Empty array - just insert the post
+            const closingBracketPos = blogFileContent.indexOf(']', matchEndPosition);
+            blogFileContent =
+                blogFileContent.slice(0, matchEndPosition) +
+                '\n' + newPost + '\n' +
+                blogFileContent.slice(closingBracketPos);
+        } else {
+            // Array has existing posts - insert at beginning
+            blogFileContent =
+                blogFileContent.slice(0, matchEndPosition) +
+                '\n' + newPost +
+                blogFileContent.slice(matchEndPosition);
+        }
 
         // Commit to GitHub
         const commitMessage = `Add blog post: ${title}`;
