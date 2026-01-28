@@ -11,7 +11,7 @@ export type BlogPost = {
     coverImage?: string;
 };
 
-export const blogPosts: BlogPost[
+export const blogPosts: BlogPost[] = [
     {
         slug: "tiny-llm",
         title: "Training a 67M-Parameter Transformer on an M4 Mac Mini",
@@ -426,23 +426,7 @@ Go build something.
         tags: ["Machine Learning", "Transformers", "Small Models", "Apple Silicon", "Training from Scratch"],
         readingTime: "19 min read",
         featured: true,
-    },] = [
-    // Your blog posts will go here
-    // Example structure:
-    // {
-    //   slug: "my-first-post",
-    //   title: "My First Blog Post",
-    //   excerpt: "A brief description of what this post is about...",
-    //   content: `
-    //     # My First Blog Post
-    //     
-    //     Your markdown content here...
-    //   `,
-    //   publishedAt: "2026-01-27",
-    //   tags: ["AI", "Machine Learning"],
-    //   readingTime: "5 min read",
-    //   featured: true,
-    // },
+    },
 ];
 
 // Helper function to get a post by slug
