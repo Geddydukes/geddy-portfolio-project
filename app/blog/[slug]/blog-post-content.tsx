@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, Clock, Share2, Twitter, Linkedin } from "lucide-react";
@@ -112,7 +113,11 @@ interface BlogPostContentProps {
 }
 
 export default function BlogPostContent({ post }: BlogPostContentProps) {
-    const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+    const [shareUrl, setShareUrl] = useState('');
+
+    useEffect(() => {
+        setShareUrl(window.location.href);
+    }, []);
 
     return (
         <div className={styles.pageWrapper}>
