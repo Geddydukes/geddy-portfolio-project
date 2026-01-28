@@ -68,6 +68,16 @@ export default function Header() {
                 </button>
               </motion.li>
             ))}
+            <motion.li
+              key="blog"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 5 * 0.1 }}
+            >
+              <Link href="/blog" className={styles.navButton}>
+                Blog
+              </Link>
+            </motion.li>
           </ul>
         </nav>
       </div>

@@ -16,11 +16,8 @@ export const me = {
 };
 
 export const brandSummary = `
-AI-native systems engineer and builder who turns complex rules and models into auditable, production software. 
-I’ve built a neuro-symbolic reasoning framework (Hydra), a provider-agnostic agent runtime (Feather), 
-and a multimodal world model — while leading development of a finance platform used in real underwriting workflows. 
-With a PMP backbone and experience managing $30M–$100M programs, I design systems that are explainable, measurable, 
-and ready for regulated environments. Currently deploying Hydra and Wisely; SafeMama is launch-ready.
+AI/ML systems engineer who designs production ML infrastructure with reliability and evaluation as first principles. Built and evaluated a 67M-parameter language model from scratch achieving 93.94% exact-match accuracy under consumer hardware constraints. Built and open-sourced agent runtimes and evaluation frameworks used to measure and debug agent reliability over time. Specializes in neuro-symbolic systems, multimodal learning, and building trustworthy AI systems for regulated environments.
+
 `.trim();
 
 export const skills = {
@@ -99,121 +96,120 @@ export type Project = {
 };
 
 export const projects: Project[] = [
-    // Deep Learning Research
+    // AI Infrastructure & Agentic Systems
     {
-        slug: "tiny-llm",
-        category: "Deep Learning Research",
-        name: "TinyLLM - Language Model from Scratch",
-        tagline: "67M parameter transformer with continual learning system",
+        slug: "underwriting-agent",
+        category: "AI Infrastructure & Agentic Systems",
+        name: "Underwriting Agent – AI-Native Credit Decision Platform",
+        tagline: "End-to-end underwriting workspace with agentic analysis, risk surfacing, and provenance",
         status: "live",
-        stack: ["Python", "PyTorch", "WandB"],
-        summary: "Implemented a 67M parameter transformer from scratch, featuring a custom continual learning system to prevent catastrophic forgetting.",
-        highlights: ["67M Parameters", "Continual Learning", "Transformer Architecture"],
+        stack: ["Python", "TypeScript", "FastAPI", "PostgreSQL", "LLMs"],
+        summary:
+            "Full-stack underwriting platform that unifies financial analysis, document ingestion, and policy-aware decisioning into a single workflow. The system orchestrates multiple domain-specific agents to surface risks, validate assumptions, and generate auditable decision support tied directly to source documents and deterministic calculations.\n\nBuilt by productizing earlier deterministic finance and policy engines into a workflow underwriters can actually use.",
+        highlights: ["Agent-Orchestrated Workflow", "Deterministic + LLM Hybrid", "End-to-End Auditability"],
         links: [
-            { type: "github", href: "https://github.com/Geddydukes/TinyLLM", label: "GitHub" },
-            { type: "demo", href: "#", label: "Demo" },
-            { type: "blog", href: "#", label: "Blog Post" },
+            { type: "github", href: "https://github.com/Geddydukes/underwriting_agent" },
+            { type: "docs", href: "#", label: "Case Study" },
         ],
         featured: true,
     },
     {
-        slug: "world-model-poc",
-        category: "Deep Learning Research",
-        name: "World Model - Multimodal Self-Supervised Learning",
-        tagline: "JEPA + CPC + CLIP implementation with episodic memory",
+        slug: "claims-policy-engine",
+        category: "AI Infrastructure & Agentic Systems",
+        name: "Claims & Policy Decision Engine",
+        tagline: "Neuro-symbolic decision engine for regulated workflows",
         status: "live",
-        stack: ["Python", "PyTorch", "JEPA", "CPC", "NumPy"],
+        stack: ["Python", "FastAPI", "Pydantic", "PostgreSQL"],
         summary:
-            "Vision–audio contrastive learning with episodic memory; nightly training/validation and rollout evaluation to test temporal dynamics and embedding coherence.",
-        highlights: ["JEPA + CPC + CLIP", "Episodic Memory", "Self-Supervised"],
+            "Policy and claims decision engine designed to convert probabilistic LLM extraction into deterministic, auditable outcomes. The system explicitly separates AI-powered document interpretation from rule evaluation, enforcing strict validation, confidence thresholds, and traceable decision paths.\n\nDesigned for environments where hallucination is unacceptable and every decision must be defensible.",
+        highlights: ["Neuro-Symbolic Architecture", "Deterministic Rule Enforcement", "Audit Trails & Provenance"],
         links: [
-            { type: "github", href: "https://github.com/Geddydukes/world-model-poc", label: "GitHub" },
-            { type: "demo", href: "#", label: "Demo" },
-            { type: "docs", href: "#", label: "Technical Doc" },
+            { type: "github", href: "https://github.com/Geddydukes/Policy-and-Claims-Processing-Decision-Engine", label: "GitHub" },
+            { type: "docs", href: "#", label: "Technical Writeup" },
+        ],
+        featured: true,
+    },
+    {
+        slug: "research-discovery-agent",
+        category: "AI Infrastructure & Agentic Systems",
+        name: "Research Discovery Agent",
+        tagline: "Provenance-tracked research extraction and knowledge graph",
+        status: "live",
+        stack: ["TypeScript", "Node.js", "PostgreSQL", "LLMs"],
+        summary:
+            "Research discovery system that converts unstructured papers into a structured, queryable knowledge graph while enforcing provenance and confidence at every step. LLMs propose extractions, which are then validated deterministically before graph ingestion.\n\nDesigned to prioritize correctness and traceability over fluency.",
+        highlights: ["Provenance-First Extraction", "Confidence-Gated Claims", "Neuro-Symbolic Validation"],
+        links: [
+            { type: "github", href: "https://github.com/Geddydukes/Research_Agent", label: "GitHub" },
+            { type: "demo", href: "https://research-agent-auzoksqnx-geddydukes-projects.vercel.app/", label: "Live Demo" },
+        ],
+        featured: true,
+    },
+    {
+        slug: "agentft",
+        category: "AI Infrastructure & Agentic Systems",
+        name: "AgentFT – Agent Evaluation Framework",
+        tagline: "Reproducible evaluation harness for agentic systems",
+        status: "live",
+        stack: ["Python", "AsyncIO", "PyTorch", "Jinja2"],
+        summary:
+            "Evaluation framework for testing and benchmarking AI agents as software artifacts. Supports task abstractions, async execution, composite judging, and trace-level logging to detect regressions across versions and workflows.\n\nBuilt to make agent reliability measurable, repeatable, and debuggable.",
+        highlights: ["Async Evaluation Engine", "Regression Detection", "Trace-Level Observability"],
+        links: [
+            { type: "github", href: "https://github.com/Geddydukes/agentflowtest", label: "GitHub" },
+            { type: "pypi", href: "https://pypi.org/project/agentft/", label: "PyPI" },
         ],
         featured: true,
     },
 
-    // AI Infrastructure & Frameworks
+    // Deep Learning Research
     {
-        slug: "daedelos",
-        category: "AI Infrastructure & Frameworks",
-        name: "Daedelos SDK - Neuro-Symbolic AI Platform",
-        tagline: "Enterprise AI governance with audit trails and hybrid reasoning",
-        status: "deploying",
-        stack: ["Python", "FastAPI", "PostgreSQL", "pgvector", "Redis"],
+        slug: "tiny-llm",
+        category: "Deep Learning Research",
+        name: "TinyLLM – Language Model from Scratch",
+        tagline: "67M parameter transformer with continual learning system",
+        status: "live",
+        stack: ["Python", "PyTorch", "WandB"],
         summary:
-            "Hybrid multi-agent framework that composes deterministic symbolic rules with LLM agents for explainable, traceable decisions in regulated contexts.",
-        highlights: ["Neuro-Symbolic", "Audit Trails", "Hybrid Reasoning"],
+            "Implemented a 67M parameter GPT-style transformer from scratch, including RoPE, RMSNorm, and SwiGLU, trained entirely on consumer hardware. Designed a custom continual learning system with replay buffers and evaluation gating to prevent catastrophic forgetting.\n\nAchieved 93.94% exact-match accuracy on CLI command generation tasks.",
+        highlights: ["67M Parameters", "Continual Learning", "Transformer Architecture"],
         links: [
-            { type: "github", href: "https://github.com/Geddydukes/Hydra_system", label: "GitHub" },
-            { type: "docs", href: "#", label: "Documentation" },
-            { type: "docs", href: "#", label: "Architecture" },
+            { type: "github", href: "https://github.com/Geddydukes/tiny_llm", label: "GitHub" },
+            { type: "demo", href: "#", label: "Demo" },
+            { type: "blog", href: "/blog/tiny-llm", label: "Blog Post" },
         ],
         featured: true,
     },
     {
-        slug: "feather-agent",
-        category: "AI Infrastructure & Frameworks",
-        name: "Feather Agent - Open-Source Agent Runtime",
-        tagline: "Provider-agnostic agent framework (published on npm)",
+        slug: "world-model",
+        category: "Deep Learning Research",
+        name: "World Model – Multimodal Self-Supervised Learning",
+        tagline: "JEPA + CPC + CLIP implementation with episodic memory",
         status: "live",
-        stack: ["TypeScript", "Node.js"],
+        stack: ["Python", "PyTorch", "JEPA", "CPC", "NumPy"],
         summary:
-            "Open-source runtime for stateful agents, tool execution, model routing, and transparent streaming plans with config-driven state/behavior/lifecycle.",
-        highlights: ["Provider-Agnostic", "npm Package", "Agent Runtime"],
+            "Vision–audio contrastive learning system with episodic memory, trained using self-supervised objectives. Includes nightly training and validation pipelines plus rollout evaluation to test temporal consistency, representation coherence, and downstream retrieval behavior.\n\nExplores representation learning for reasoning rather than standalone embeddings.",
+        highlights: ["JEPA + CPC + CLIP", "Episodic Memory", "Self-Supervised Learning"],
         links: [
-            { type: "npm", href: "https://www.npmjs.com/package/feather-agent", label: "npm Package" },
-            { type: "github", href: "https://github.com/Geddydukes/feather-agent", label: "GitHub" },
-            { type: "docs", href: "#", label: "API Docs" },
-        ],
-        featured: true,
-    },
-    {
-        slug: "agentbench",
-        category: "AI Infrastructure & Frameworks",
-        name: "agentbench – Open-Source Agent Evaluation Framework",
-        tagline: "Framework for benchmarking LLM and tool-using agents",
-        status: "live",
-        stack: ["Python", "AsyncIO"],
-        summary:
-            "Framework for benchmarking LLM and tool-using agents. Supports async execution, retries, rate limits, composite judges, JSONL artifacts, traces, and HTML reports.",
-        highlights: ["Agent Benchmarking", "Open Source", "Python Package", "Report Generation"],
-        links: [
-            { type: "github", href: "https://github.com/Geddydukes/agentbench", label: "GitHub" },
-            { type: "docs", href: "https://pypi.org/project/agentbench/", label: "PyPI" },
+            { type: "github", href: "https://github.com/Geddydukes/world-model-poc", label: "GitHub" },
         ],
         featured: true,
     },
 
     // Full Stack Applications
     {
-        slug: "audio-routing-sim",
-        category: "Full Stack Applications",
-        name: "Audio Routing System - Hybrid ML + Rules",
-        tagline: "Intelligent audio classification and dynamic stem routing",
-        status: "live",
-        stack: ["Python", "DSP/ML"],
-        summary:
-            "Ingests multi-track audio events (speech/SFX/music), classifies via rule + ML, and dynamically routes stems through a virtual post-production graph.",
-        highlights: ["Hybrid ML + Rules", "Dynamic Routing", "Audio Classification"],
-        links: [
-            { type: "github", href: "https://github.com/Geddydukes/Audio_routing_sim", label: "GitHub" },
-            { type: "docs", href: "#", label: "Technical Overview" },
-        ],
-        featured: true,
-    },
-    {
         slug: "financial-platform",
         category: "Full Stack Applications",
         name: "Financial Analysis Platform",
-        tagline: "Real-time underwriting metrics with RBAC + audit",
+        tagline: "Real-time financial computation engine for underwriting teams",
         status: "live",
-        stack: ["Next.js", "TypeScript", "PostgreSQL", "Supabase", "Node.js"],
+        stack: ["TypeScript", "Next.js", "PostgreSQL", "RBAC"],
         summary:
-            "Underwriting workflow platform processing millions in loan volume; 15+ metrics with sub-second latency, RBAC, audit logs, and secure APIs.",
-        highlights: ["Sub-second calc engine", "Compliance-ready", "Used in production"],
-        links: [],
+            "Production fintech platform supporting real-time financial analysis, metric computation, and compliance workflows. Architected deterministic calculation pipelines, role-based access control, and full audit logging to support underwriting decisions across millions in loan volume with sub-second latency requirements.\n\nServed as the deterministic financial core later reused in agentic underwriting systems.",
+        highlights: ["Deterministic Computation", "Real-Time Metrics", "Compliance-First Design"],
+        links: [
+            { type: "github", href: "https://github.com/Geddydukes/FinancialAnalysisTool", label: "GitHub" },
+        ],
         featured: true,
     },
 ];

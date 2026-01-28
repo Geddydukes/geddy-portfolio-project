@@ -16,7 +16,7 @@ export default function Home() {
         <div className="container">
           <h2 className={styles.sectionTitle}>Featured Projects</h2>
           <div className={styles.projectsWrapper}>
-            {["Deep Learning Research", "AI Infrastructure & Frameworks", "Full Stack Applications"].map((category) => {
+            {["AI Infrastructure & Agentic Systems", "Deep Learning Research", "Full Stack Applications"].map((category) => {
               const categoryProjects = projects.filter((p) => p.category === category)
               if (categoryProjects.length === 0) return null
 
