@@ -1,0 +1,71 @@
+.backgroundWrapper {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+    background-color: #020617;
+    /* slate-950 */
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    filter: blur(64px);
+    opacity: 0.3;
+    animation: blob 7s infinite;
+}
+
+.blob1 {
+    top: 0;
+    left: 25%;
+    width: 24rem;
+    height: 24rem;
+    background-color: rgba(99, 102, 241, 0.1);
+    /* indigo-500/10 */
+}
+
+.blob2 {
+    top: 0;
+    right: 25%;
+    width: 24rem;
+    height: 24rem;
+    background-color: rgba(59, 130, 246, 0.1);
+    /* blue-500/10 */
+    animation-delay: 2s;
+}
+
+.blob3 {
+    bottom: -8rem;
+    left: 33%;
+    width: 24rem;
+    height: 24rem;
+    background-color: rgba(100, 116, 139, 0.1);
+    /* slate-500/10 */
+    animation-delay: 4s;
+}
+
+.gridOverlay {
+    position: absolute;
+    inset: 0;
+    background-image: url('/grid.svg');
+    opacity: 0.02;
+}
+
+@keyframes blob {
+    0% {
+        transform: translate(0px, 0px) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -50px) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+
+    100% {
+        transform: translate(0px, 0px) scale(1);
+    }
+}
