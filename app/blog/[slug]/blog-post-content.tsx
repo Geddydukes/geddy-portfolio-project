@@ -8,6 +8,16 @@ import { BlogPost } from "@/content/blog";
 import AnalyticsTracker from "@/components/analytics-tracker";
 import styles from "./page.module.css";
 
+// Helper function to generate slug from header text for anchor links
+function generateHeaderId(text: string): string {
+    return text
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+        .replace(/\s+/g, '-') // Replace spaces with hyphens
+        .replace(/-+/g, '-') // Replace multiple hyphens with single
+        .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
+}
+
 // Simple markdown parser for basic formatting
 function parseMarkdown(content: string): string {
     let html = content;
@@ -32,10 +42,19 @@ function parseMarkdown(content: string): string {
     // Remove the reference definitions from the output
     html = html.replace(/\[([^\]]+)\]:\s*<[^>]+>/g, '');
 
-    // Headers
-    html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-    html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-    html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+    // Headers with IDs for anchor links (table of contents support)
+    html = html.replace(/^### (.*$)/gim, (_, headerText) => {
+        const id = generateHeaderId(headerText);
+        return `<h3 id="${id}">${headerText}</h3>`;
+    });
+    html = html.replace(/^## (.*$)/gim, (_, headerText) => {
+        const id = generateHeaderId(headerText);
+        return `<h2 id="${id}">${headerText}</h2>`;
+    });
+    html = html.replace(/^# (.*$)/gim, (_, headerText) => {
+        const id = generateHeaderId(headerText);
+        return `<h1 id="${id}">${headerText}</h1>`;
+    });
 
     // Bold and italic
     html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
