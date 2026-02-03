@@ -1,110 +1,95 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Redis } from "@upstash/redis";
 
-// Initialize Redis client
-const redis = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL || "",
-    token: process.env.UPSTASH_REDIS_REST_TOKEN || "",
-});
+// Force dynamic rendering for this API route
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
     try {
         // Check authorization
         const authHeader = request.headers.get("authorization");
-        const token = authHeader?.replace("Bearer ", "");
+        const password = process.env.ANALYTICS_PASSWORD || process.env.BLOG_PASSWORD;
 
-        if (token !== process.env.ANALYTICS_PASSWORD) {
+        if (!authHeader || authHeader !== `Bearer ${password}`) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        // Get today's date
+        // Check if Redis is configured
+        if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+            return NextResponse.json({ error: "Upstash Redis not configured" }, { status: 500 });
+        }
+
+        // Lazy import Redis
+        const { Redis } = await import("@upstash/redis");
+        const redis = new Redis({
+            url: process.env.UPSTASH_REDIS_REST_URL,
+            token: process.env.UPSTASH_REDIS_REST_TOKEN,
+        });
+
+        // Get all page views
+        const views = await redis.hgetall("analytics:views") || {};
+
+        // Get unique visitor counts for each page
+        const uniqueCounts: Record<string, number> = {};
+        for (const pageId of Object.keys(views)) {
+            const count = await redis.scard(`analytics:unique:${pageId}`);
+            uniqueCounts[pageId] = count || 0;
+        }
+
+        // Get today's stats
         const today = new Date().toISOString().split("T")[0];
+        const todayViews = await redis.hgetall(`analytics:daily:${today}`) || {};
 
-        // Get all tracked pages
-        const allPages = await redis.smembers("all_pages");
-
-        // Calculate totals
-        let totalViews = 0;
-        const pageBreakdown: Array<{ page: string; views: number; uniqueVisitors: number }> = [];
-
-        for (const pageId of allPages) {
-            const views = (await redis.get(`pageviews:${pageId}:total`)) as number || 0;
-            const uniqueVisitors = await redis.scard(`visitors:${pageId}`);
-            totalViews += views;
-            pageBreakdown.push({
-                page: pageId as string,
-                views,
-                uniqueVisitors,
-            });
-        }
-
-        // Sort by views descending
-        pageBreakdown.sort((a, b) => b.views - a.views);
-
-        // Get total unique visitors
-        const totalUniqueVisitors = await redis.scard("all_visitors");
-
-        // Get today's views (sum across all pages)
-        let todayViews = 0;
-        for (const pageId of allPages) {
-            const dayViews = (await redis.get(`pageviews:${pageId}:${today}`)) as number || 0;
-            todayViews += dayViews;
-        }
-
-        // Get referrers
-        const referrersRaw = await redis.zrange("referrers", 0, -1, { withScores: true });
-        const referrers: Array<{ source: string; count: number }> = [];
-        for (let i = 0; i < referrersRaw.length; i += 2) {
-            referrers.push({
-                source: referrersRaw[i] as string,
-                count: referrersRaw[i + 1] as number,
-            });
-        }
-        referrers.sort((a, b) => b.count - a.count);
-
-        // Get last 7 days stats
+        // Get last 7 days of data
         const last7Days: Record<string, Record<string, number>> = {};
         for (let i = 0; i < 7; i++) {
             const date = new Date();
             date.setDate(date.getDate() - i);
-            const dateKey = date.toISOString().split("T")[0];
-            last7Days[dateKey] = {};
-
-            for (const pageId of allPages) {
-                const views = (await redis.get(`pageviews:${pageId}:${dateKey}`)) as number || 0;
-                if (views > 0) {
-                    last7Days[dateKey][pageId as string] = views;
-                }
+            const dateStr = date.toISOString().split("T")[0];
+            const dayViews = await redis.hgetall(`analytics:daily:${dateStr}`);
+            if (dayViews && Object.keys(dayViews).length > 0) {
+                last7Days[dateStr] = dayViews as Record<string, number>;
             }
         }
 
-        // Get recent visits
-        const recentVisitsRaw = await redis.lrange("recent_visits", 0, 19);
-        const recentVisits = recentVisitsRaw.map((visit) => {
+        // Get referrer breakdown
+        const referrers = await redis.hgetall("analytics:referrers") || {};
+
+        // Get recent visit log (last 50)
+        const recentVisits = await redis.lrange("analytics:visit-log", 0, 49);
+        const parsedVisits = recentVisits.map((visit: string | object) => {
             try {
-                return typeof visit === "string" ? JSON.parse(visit) : visit;
+                return typeof visit === 'string' ? JSON.parse(visit) : visit;
             } catch {
-                return null;
+                return visit;
             }
-        }).filter(Boolean);
+        });
+
+        // Calculate totals
+        const totalViews = Object.values(views).reduce((sum: number, v) => sum + Number(v), 0);
+        const totalUnique = Object.values(uniqueCounts).reduce((sum, v) => sum + v, 0);
+        const todayTotal = Object.values(todayViews).reduce((sum: number, v) => sum + Number(v), 0);
 
         return NextResponse.json({
             summary: {
                 totalViews,
-                totalUniqueVisitors,
-                todayViews,
+                totalUniqueVisitors: totalUnique,
+                todayViews: todayTotal,
             },
-            pageBreakdown,
-            referrers,
+            pageBreakdown: Object.keys(views).map(pageId => ({
+                page: pageId,
+                views: Number(views[pageId]),
+                uniqueVisitors: uniqueCounts[pageId] || 0,
+            })).sort((a, b) => b.views - a.views),
+            referrers: Object.entries(referrers)
+                .map(([source, count]) => ({ source, count: Number(count) }))
+                .sort((a, b) => b.count - a.count),
             last7Days,
-            recentVisits,
+            recentVisits: parsedVisits,
             generatedAt: new Date().toISOString(),
         });
+
     } catch (error) {
         console.error("Analytics stats error:", error);
-        return NextResponse.json(
-            { error: "Failed to fetch analytics" },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: "Failed to fetch analytics" }, { status: 500 });
     }
 }
