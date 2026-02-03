@@ -79,8 +79,15 @@ function parseMarkdown(content: string): string {
     // Blockquotes
     html = html.replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
 
-    // Links
-    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    // Links - handle anchor links differently from external links
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, text, href) => {
+        if (href.startsWith('#')) {
+            // Anchor link - same page navigation
+            return `<a href="${href}">${text}</a>`;
+        }
+        // External link - open in new tab
+        return `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+    });
 
     // Inline images (including base64)
     html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width: 100%; border-radius: 8px; margin: 1rem 0;" />');
