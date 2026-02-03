@@ -22,7 +22,44 @@ function generateHeaderId(text: string): string {
 function parseMarkdown(content: string): string {
     let html = content;
 
-    // First, handle reference-style images (Google Docs format)
+    // Store code blocks and mermaid diagrams FIRST to prevent other transformations from affecting them
+    const codeBlocks: string[] = [];
+    const mermaidBlocks: string[] = [];
+
+    // Extract mermaid diagrams first
+    html = html.replace(/```mermaid\n([\s\S]*?)```/g, (_, mermaidCode) => {
+        const index = mermaidBlocks.length;
+        mermaidBlocks.push(mermaidCode.trim());
+        return `___MERMAID_BLOCK_${index}___`;
+    });
+
+    // Extract code blocks
+    html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (_, lang, code) => {
+        const index = codeBlocks.length;
+        const escaped = code
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+        const langClass = lang ? ` class="language-${lang}"` : '';
+        codeBlocks.push(`<pre><code${langClass}>${escaped}</code></pre>`);
+        return `___CODE_BLOCK_${index}___`;
+    });
+
+    // Extract inline code
+    const inlineCodes: string[] = [];
+    html = html.replace(/`([^`]+)`/g, (_, code) => {
+        const index = inlineCodes.length;
+        const escaped = code
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+        inlineCodes.push(`<code>${escaped}</code>`);
+        return `___INLINE_CODE_${index}___`;
+    });
+
+    // Now process the rest safely
+
+    // Handle reference-style images (Google Docs format)
     const refImageRegex = /\[([^\]]+)\]:\s*<([^>]+)>/g;
     const imageRefs: { [key: string]: string } = {};
     let match;
@@ -61,30 +98,6 @@ function parseMarkdown(content: string): string {
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
 
-    // Mermaid diagrams - handle before regular code blocks
-    html = html.replace(/```mermaid\n([\s\S]*?)```/g, (_, mermaidCode) => {
-        // Mermaid code should not be escaped - it's processed by Mermaid.js
-        const trimmedCode = mermaidCode.trim();
-        return `<div class="mermaid">${trimmedCode}</div>`;
-    });
-
-    // Code blocks - escape HTML entities inside code (but not mermaid)
-    html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (_, lang, code) => {
-        const escaped = code
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
-        const langClass = lang ? ` class="language-${lang}"` : '';
-        return `<pre><code${langClass}>${escaped}</code></pre>`;
-    });
-    html = html.replace(/`([^`]+)`/g, (_, code) => {
-        const escaped = code
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
-        return `<code>${escaped}</code>`;
-    });
-
     // Blockquotes
     html = html.replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
 
@@ -116,13 +129,33 @@ function parseMarkdown(content: string): string {
             !trimmed.startsWith('<pre') &&
             !trimmed.startsWith('<blockquote') &&
             !trimmed.startsWith('<hr') &&
-            !trimmed.startsWith('<img')) {
+            !trimmed.startsWith('<img') &&
+            !trimmed.startsWith('<div') &&
+            !trimmed.startsWith('___')) {
             return `<p>${trimmed}</p>`;
         }
         return line;
     }).join('\n');
 
     html = html.replace(/<p><\/p>/g, '');
+
+    // Restore inline code
+    inlineCodes.forEach((code, index) => {
+        html = html.replace(`___INLINE_CODE_${index}___`, code);
+    });
+
+    // Restore code blocks
+    codeBlocks.forEach((block, index) => {
+        html = html.replace(`___CODE_BLOCK_${index}___`, block);
+    });
+
+    // Restore mermaid blocks
+    mermaidBlocks.forEach((code, index) => {
+        html = html.replace(
+            `___MERMAID_BLOCK_${index}___`,
+            `<div class="mermaid">${code}</div>`
+        );
+    });
 
     return html;
 }

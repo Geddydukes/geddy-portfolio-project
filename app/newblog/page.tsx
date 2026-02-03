@@ -10,8 +10,43 @@ import styles from "./page.module.css";
 function parseMarkdown(content: string): string {
     let html = content;
 
-    // First, handle reference-style images (Google Docs format)
-    // Find all image reference definitions like [image1]: <data:image/png;base64,...>
+    // Store code blocks and mermaid diagrams FIRST to prevent other transformations from affecting them
+    const codeBlocks: string[] = [];
+    const mermaidBlocks: string[] = [];
+
+    // Extract mermaid diagrams first
+    html = html.replace(/```mermaid\n([\s\S]*?)```/g, (_, mermaidCode) => {
+        const index = mermaidBlocks.length;
+        mermaidBlocks.push(mermaidCode.trim());
+        return `___MERMAID_BLOCK_${index}___`;
+    });
+
+    // Extract code blocks
+    html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (_, lang, code) => {
+        const index = codeBlocks.length;
+        const escaped = code
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+        codeBlocks.push(`<pre><code>${escaped}</code></pre>`);
+        return `___CODE_BLOCK_${index}___`;
+    });
+
+    // Extract inline code
+    const inlineCodes: string[] = [];
+    html = html.replace(/`([^`]+)`/g, (_, code) => {
+        const index = inlineCodes.length;
+        const escaped = code
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+        inlineCodes.push(`<code>${escaped}</code>`);
+        return `___INLINE_CODE_${index}___`;
+    });
+
+    // Now process the rest safely
+
+    // Handle reference-style images (Google Docs format)
     const refImageRegex = /\[([^\]]+)\]:\s*<([^>]+)>/g;
     const imageRefs: { [key: string]: string } = {};
     let match;
@@ -19,7 +54,7 @@ function parseMarkdown(content: string): string {
         imageRefs[match[1]] = match[2];
     }
 
-    // Replace reference-style image uses with actual images: ![][image1] -> <img src="..." />
+    // Replace reference-style image uses with actual images
     html = html.replace(/!\[([^\]]*)\]\[([^\]]+)\]/g, (_, alt, ref) => {
         const src = imageRefs[ref];
         if (src) {
@@ -40,28 +75,6 @@ function parseMarkdown(content: string): string {
     html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-
-    // Mermaid diagrams - handle before regular code blocks
-    html = html.replace(/```mermaid\n([\s\S]*?)```/g, (_, mermaidCode) => {
-        const trimmedCode = mermaidCode.trim();
-        return `<div class="mermaid" style="margin: 1rem 0; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 8px; text-align: center;">${trimmedCode}</div>`;
-    });
-
-    // Code blocks - escape HTML entities inside code
-    html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (_, lang, code) => {
-        const escaped = code
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
-        return `<pre><code>${escaped}</code></pre>`;
-    });
-    html = html.replace(/`([^`]+)`/g, (_, code) => {
-        const escaped = code
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
-        return `<code>${escaped}</code>`;
-    });
 
     // Blockquotes
     html = html.replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
@@ -94,13 +107,32 @@ function parseMarkdown(content: string): string {
             !trimmed.startsWith('<pre') &&
             !trimmed.startsWith('<blockquote') &&
             !trimmed.startsWith('<hr') &&
-            !trimmed.startsWith('<img')) {
+            !trimmed.startsWith('<img') &&
+            !trimmed.startsWith('___')) {
             return `<p>${trimmed}</p>`;
         }
         return line;
     }).join('\n');
 
     html = html.replace(/<p><\/p>/g, '');
+
+    // Restore inline code
+    inlineCodes.forEach((code, index) => {
+        html = html.replace(`___INLINE_CODE_${index}___`, code);
+    });
+
+    // Restore code blocks
+    codeBlocks.forEach((block, index) => {
+        html = html.replace(`___CODE_BLOCK_${index}___`, block);
+    });
+
+    // Restore mermaid blocks
+    mermaidBlocks.forEach((code, index) => {
+        html = html.replace(
+            `___MERMAID_BLOCK_${index}___`,
+            `<div class="mermaid" style="margin: 1rem 0; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 8px; text-align: center;">${code}</div>`
+        );
+    });
 
     return html;
 }
