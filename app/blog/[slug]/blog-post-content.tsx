@@ -179,7 +179,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
 
                 // Run mermaid on all diagram elements
                 try {
-                    await mermaid.run({ nodes: mermaidElements });
+                    await mermaid.run({ nodes: Array.from(mermaidElements) as HTMLElement[] });
                 } catch (error) {
                     console.error('Mermaid rendering error:', error);
                 }

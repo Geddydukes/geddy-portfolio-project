@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Eye, Code, Copy, Check, Image as ImageIcon, Sparkles, Send, Loader2, CheckCircle, AlertCircle } from "lucide-react";
@@ -135,6 +135,53 @@ export default function NewBlogPage() {
     const [statusMessage, setStatusMessage] = useState("");
     const [password, setPassword] = useState("");
     const contentRef = useRef<HTMLTextAreaElement>(null);
+
+    // Initialize Mermaid when preview tab is active
+    useEffect(() => {
+        if (activeTab === "preview") {
+            const initMermaid = async () => {
+                const mermaidElements = document.querySelectorAll('.mermaid');
+                if (mermaidElements.length > 0) {
+                    const mermaid = (await import('mermaid')).default;
+                    mermaid.initialize({
+                        startOnLoad: false,
+                        theme: 'dark',
+                        themeVariables: {
+                            primaryColor: '#6366f1',
+                            primaryTextColor: '#fff',
+                            primaryBorderColor: '#818cf8',
+                            lineColor: '#a5b4fc',
+                            secondaryColor: '#4f46e5',
+                            tertiaryColor: '#1e1b4b',
+                            background: '#0f0f23',
+                            mainBkg: '#1e1b4b',
+                            secondBkg: '#312e81',
+                            textColor: '#e0e7ff',
+                            nodeBorder: '#818cf8',
+                            clusterBkg: '#1e1b4b',
+                            clusterBorder: '#6366f1',
+                            edgeLabelBackground: '#1e1b4b',
+                        },
+                        flowchart: {
+                            useMaxWidth: true,
+                            htmlLabels: true,
+                            curve: 'basis',
+                        },
+                    });
+
+                    try {
+                        await mermaid.run({ nodes: Array.from(mermaidElements) as HTMLElement[] });
+                    } catch (error) {
+                        console.error('Mermaid rendering error:', error);
+                    }
+                }
+            };
+
+            // Small delay to ensure DOM is updated
+            const timer = setTimeout(initMermaid, 100);
+            return () => clearTimeout(timer);
+        }
+    }, [activeTab, content]);
 
     // Handle title change and auto-generate slug
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
