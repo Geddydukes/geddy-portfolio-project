@@ -41,6 +41,12 @@ function parseMarkdown(content: string): string {
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
 
+    // Mermaid diagrams - handle before regular code blocks
+    html = html.replace(/```mermaid\n([\s\S]*?)```/g, (_, mermaidCode) => {
+        const trimmedCode = mermaidCode.trim();
+        return `<div class="mermaid" style="margin: 1rem 0; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 8px; text-align: center;">${trimmedCode}</div>`;
+    });
+
     // Code blocks - escape HTML entities inside code
     html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (_, lang, code) => {
         const escaped = code

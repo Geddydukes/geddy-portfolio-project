@@ -193,6 +193,22 @@
     margin: 2rem 0;
 }
 
+/* Mermaid diagrams */
+.content :global(.mermaid) {
+    margin: 2rem 0;
+    text-align: center;
+    background: hsla(220, 50%, 10%, 0.5);
+    padding: 2rem;
+    border-radius: 0.75rem;
+    border: 1px solid hsl(var(--border));
+    overflow-x: auto;
+}
+
+.content :global(.mermaid) svg {
+    max-width: 100%;
+    height: auto;
+}
+
 .content hr {
     border: none;
     border-top: 1px solid hsl(var(--border));

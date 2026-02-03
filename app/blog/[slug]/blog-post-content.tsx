@@ -61,13 +61,21 @@ function parseMarkdown(content: string): string {
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
 
-    // Code blocks - escape HTML entities inside code
+    // Mermaid diagrams - handle before regular code blocks
+    html = html.replace(/```mermaid\n([\s\S]*?)```/g, (_, mermaidCode) => {
+        // Mermaid code should not be escaped - it's processed by Mermaid.js
+        const trimmedCode = mermaidCode.trim();
+        return `<div class="mermaid">${trimmedCode}</div>`;
+    });
+
+    // Code blocks - escape HTML entities inside code (but not mermaid)
     html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (_, lang, code) => {
         const escaped = code
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
-        return `<pre><code>${escaped}</code></pre>`;
+        const langClass = lang ? ` class="language-${lang}"` : '';
+        return `<pre><code${langClass}>${escaped}</code></pre>`;
     });
     html = html.replace(/`([^`]+)`/g, (_, code) => {
         const escaped = code
@@ -137,7 +145,51 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
 
     useEffect(() => {
         setShareUrl(window.location.href);
-    }, []);
+
+        // Initialize Mermaid.js for diagrams
+        const initMermaid = async () => {
+            const mermaidElements = document.querySelectorAll('.mermaid');
+            if (mermaidElements.length > 0) {
+                const mermaid = (await import('mermaid')).default;
+                mermaid.initialize({
+                    startOnLoad: false,
+                    theme: 'dark',
+                    themeVariables: {
+                        primaryColor: '#6366f1',
+                        primaryTextColor: '#fff',
+                        primaryBorderColor: '#818cf8',
+                        lineColor: '#a5b4fc',
+                        secondaryColor: '#4f46e5',
+                        tertiaryColor: '#1e1b4b',
+                        background: '#0f0f23',
+                        mainBkg: '#1e1b4b',
+                        secondBkg: '#312e81',
+                        textColor: '#e0e7ff',
+                        nodeBorder: '#818cf8',
+                        clusterBkg: '#1e1b4b',
+                        clusterBorder: '#6366f1',
+                        edgeLabelBackground: '#1e1b4b',
+                    },
+                    flowchart: {
+                        useMaxWidth: true,
+                        htmlLabels: true,
+                        curve: 'basis',
+                    },
+                });
+
+                // Run mermaid on all diagram elements
+                try {
+                    await mermaid.run({ nodes: mermaidElements });
+                } catch (error) {
+                    console.error('Mermaid rendering error:', error);
+                }
+            }
+        };
+
+        // Small delay to ensure content is rendered
+        const timer = setTimeout(initMermaid, 100);
+        return () => clearTimeout(timer);
+    }, [post.content]);
 
     return (
         <div className={styles.pageWrapper}>
