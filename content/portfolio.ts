@@ -141,9 +141,9 @@ export const projects: Project[] = [
         featured: true,
     },
     {
-        slug: "underwriting-agent",
-        name: "Underwriting Agent – AI-Native Credit Decision Platform",
-        label: "In Development",
+        slug: "provenance",
+        name: "Provenance – AI-Native Credit Decision Platform",
+        label: "Live",
         impactStatement: "AI underwriting platform designed to reduce loan analysis from weeks to days while maintaining full regulatory compliance for CDFIs.",
         description: "End-to-end underwriting workspace that automates financial document processing, surfaces risks with complete provenance tracking, and generates audit-ready credit memos. Built for CDFIs where every lending decision requires documentation and regulatory compliance.\n\nThe challenge: using LLMs for analysis while maintaining the auditability required in financial services. The solution: strict separation between probabilistic document extraction and deterministic decision logic, with every recommendation tied directly to source documents and calculations.",
         capabilities: [
@@ -155,8 +155,9 @@ export const projects: Project[] = [
         ],
         stack: ["Python", "TypeScript", "FastAPI", "PostgreSQL", "LLMs"],
         links: [
+            { type: "demo", href: "https://provenance-showcase.vercel.app/", label: "Live Demo" },
+            { type: "blog", href: "/blog/provenance-ai-underwriting", label: "Architecture Writeup" },
             { type: "github", href: "https://github.com/Geddydukes/underwriting_agent", label: "GitHub" },
-            { type: "case-study", href: "#", label: "Case Study (Coming Soon)" },
         ],
         featured: true,
     },

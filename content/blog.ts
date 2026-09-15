@@ -464,7 +464,7 @@ That is what Provenance does for underwriting. The architecture is specific. The
 
 ---
 
-Provenance is currently a private project. If you are building AI systems for regulated environments and want to talk architecture, reach out.
+Explore the live interactive [Provenance Showcase](https://provenance-showcase.vercel.app/). If you are building AI systems for regulated environments and want to talk architecture, reach out.
         `,
         publishedAt: "2026-02-03",
         tags: ["AI", "Machine Learning", "LLM", "Financial Services", "Neuro-Symbolic AI", "Production AI", "Architecture", "Finance"],
