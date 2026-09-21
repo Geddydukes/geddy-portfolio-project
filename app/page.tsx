@@ -5,7 +5,7 @@ import ExperienceItem from "@/components/experience-item"
 import SkillSection from "@/components/skill-section"
 import AnalyticsTracker from "@/components/analytics-tracker"
 import { projects, experience, skills, me, valuePropositions, contactInfo } from "@/content/portfolio"
-import { Github, Linkedin, Mail, FileText } from "lucide-react"
+import { Github, Linkedin, Mail } from "lucide-react"
 
 import styles from "./page.module.css"
 
@@ -35,7 +35,7 @@ export default function Home() {
         <div className="container">
           <h2 className={styles.sectionTitle}>Featured Projects</h2>
           <div className={styles.featuredProjectsGrid}>
-            {projects.map((project, index) => (
+            {projects.filter((project) => project.featured).map((project, index) => (
               <FeaturedProjectCard key={index} {...project} />
             ))}
           </div>
@@ -76,20 +76,20 @@ export default function Home() {
 
             <div className={styles.ctaButtons}>
               <a
-                href={me.links.resume}
+                href={me.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.primaryButton}
               >
-                <FileText className="h-5 w-5" />
-                Resume (PDF)
+                <Linkedin className="h-5 w-5" />
+                LinkedIn
               </a>
               <a
                 href={`mailto:${me.email}`}
                 className={styles.secondaryButton}
               >
                 <Mail className="h-5 w-5" />
-                Hire me
+                Get in touch
               </a>
             </div>
 

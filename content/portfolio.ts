@@ -1,18 +1,17 @@
 export const me = {
     name: "Geddy Dukes",
-    title: "ML Engineer",
+    title: "ML & Sales Engineer",
     tagline:
-        "ML Engineer who builds AI for high-stakes environments. I specialize in systems where hallucinations aren't acceptable and every decision needs an audit trail—from training 67M-parameter models from scratch to shipping production underwriting platforms for $30M portfolios.",
+        "ML and Sales Engineer at Danti, building geospatial intelligence products on grounded LLM workflows. I specialize in systems where hallucinations aren't acceptable and every decision needs an audit trail—from training a 67M-parameter model from scratch to shipping production underwriting platforms for $30M portfolios.",
     socialProof: "TinyLLM blog post featured in TLDR AI Newsletter",
     socialProofLink: "/blog/tiny-llm",
-    location: "SF Bay Area · Available immediately · Open to in-person and remote",
+    location: "SF Bay Area · Open to in-person and remote",
     email: "geddydukes@gmail.com",
     phone: "707-799-1271",
     links: {
         site: "https://geddydukes.com",
         github: "https://github.com/Geddydukes",
-        linkedin: "https://www.linkedin.com/in/geddy-dukes",
-        resume: "/Geddy-Dukes-ML-Engineer-SF.pdf",
+        linkedin: "https://www.linkedin.com/in/geddy-dukes/",
     },
 };
 
@@ -63,6 +62,27 @@ export type ExperienceItem = {
 };
 
 export const experience: ExperienceItem[] = [
+    {
+        company: "Danti",
+        role: "Sales Engineer",
+        range: "Sep 2026 – Present",
+        bullets: [
+            "Sales Engineer supporting both ML and general engineering",
+        ],
+    },
+    {
+        company: "Danti",
+        role: "ML Engineer Intern → converted to full-time",
+        range: "Feb 2026 – Sep 2026",
+        bullets: [
+            "Conceived and built Danti's Monitoring and Daily Brief products, automating recurring geospatial intelligence workflows from data collection and geospatial analysis through synthesis and delivery",
+            "Identified a commercial real estate site-intelligence opportunity and built it from concept through MVP",
+            "Built AI-driven investigation workflows spanning grounded LLM analysis, automated report generation, scheduled orchestration, synthesized insights, and persistent geospatial work products",
+            "Designed personalization and data architecture for context-aware intelligence, resolving preferences across user, role, and organization levels while integrating property, demographic, hazard, imagery, and POI data",
+            "Identified and resolved scaling, schema, and reliability risks across the stack, hardening geospatial processing, access controls, provider fallbacks, map behavior, and production AI workflows",
+        ],
+        highlight: "Intern to full-time in seven months, after conceiving and shipping products from concept to MVP.",
+    },
     {
         company: "Community Vision Capital & Consulting",
         role: "Credit Analyst & Catalytic Capital Program Manager",
@@ -179,7 +199,7 @@ export const projects: Project[] = [
             { type: "github", href: "https://github.com/Geddydukes/Policy-and-Claims-Processing-Decision-Engine", label: "GitHub" },
             { type: "writeup", href: "#", label: "Technical Writeup" },
         ],
-        featured: true,
+        featured: false,
     },
     {
         slug: "agentft",
@@ -218,7 +238,7 @@ export const projects: Project[] = [
         links: [
             { type: "github", href: "https://github.com/Geddydukes/FinancialAnalysisTool", label: "GitHub" },
         ],
-        featured: true,
+        featured: false,
     },
     {
         slug: "research-discovery-agent",
@@ -238,7 +258,7 @@ export const projects: Project[] = [
             { type: "github", href: "https://github.com/Geddydukes/Research_Agent", label: "GitHub" },
             { type: "demo", href: "https://research-agent-auzoksqnx-geddydukes-projects.vercel.app/", label: "Live Demo" },
         ],
-        featured: true,
+        featured: false,
     },
 ];
 
@@ -246,6 +266,6 @@ export const contactInfo = {
     heading: "Let's work together",
     body: `If your current AI strategy is "just use a bigger prompt," let's talk about how to build a system that actually survives an audit.
 
-I'm looking for ML engineering roles where I can build AI systems that ship to production and handle real consequences. Particularly interested in companies working in regulated industries; fintech, healthcare, insurance, legal.`,
-    location: "Based in SF Bay Area · Available immediately · Open to in-person and remote",
+I'm currently building at Danti and always glad to talk about AI systems that ship to production and handle real consequences, especially in regulated industries: fintech, healthcare, insurance, legal.`,
+    location: "Based in SF Bay Area · Open to in-person and remote",
 };

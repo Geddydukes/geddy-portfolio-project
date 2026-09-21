@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { me } from "@/content/portfolio"
-import { FileText, Mail } from "lucide-react"
+import { Linkedin, Mail } from "lucide-react"
 import styles from "./hero.module.css"
 
 export default function Hero() {
@@ -42,20 +42,20 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
         >
           <a
-            href={me.links.resume}
+            href={me.links.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.primaryButton}
           >
-            <FileText className="h-5 w-5" />
-            Resume (PDF)
+            <Linkedin className="h-5 w-5" />
+            LinkedIn
           </a>
           <a
             href={`mailto:${me.email}`}
             className={styles.secondaryButton}
           >
             <Mail className="h-5 w-5" />
-            Hire me
+            Get in touch
           </a>
         </motion.div>
       </div>
