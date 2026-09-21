@@ -20,12 +20,22 @@ interface AnalyticsData {
         source: string;
         count: number;
     }>;
+    devices?: Array<{
+        device: string;
+        count: number;
+    }>;
+    countries?: Array<{
+        country: string;
+        count: number;
+    }>;
     last7Days: Record<string, Record<string, number>>;
     recentVisits: Array<{
         timestamp: string;
         pageId: string;
         visitorId: string;
         referer: string;
+        device?: string;
+        country?: string;
         isNewVisitor: boolean;
     }>;
     generatedAt: string;
@@ -244,6 +254,46 @@ export default function AnalyticsDashboard() {
                             </motion.div>
                         )}
 
+                        {/* Devices (bot-like traffic) and countries, tracked since the analytics update */}
+                        {data.devices && data.devices.length > 0 && (
+                            <motion.div
+                                className={styles.section}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.35 }}
+                            >
+                                <h2 className={styles.sectionTitle}>Human vs Bot-like</h2>
+                                <div className={styles.referrerGrid}>
+                                    {data.devices.map((d) => (
+                                        <div key={d.device} className={styles.referrerCard}>
+                                            <span className={styles.referrerName}>{d.device}</span>
+                                            <span className={styles.referrerCount}>{d.count}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {data.countries && data.countries.length > 0 && (
+                            <motion.div
+                                className={styles.section}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.35 }}
+                            >
+                                <h2 className={styles.sectionTitle}>Countries</h2>
+                                <div className={styles.referrerGrid}>
+                                    {data.countries.slice(0, 12).map((c) => (
+                                        <div key={c.country} className={styles.referrerCard}>
+                                            <Globe size={16} />
+                                            <span className={styles.referrerName}>{c.country}</span>
+                                            <span className={styles.referrerCount}>{c.count}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        )}
+
                         {/* Recent Visits */}
                         <motion.div
                             className={styles.section}
@@ -261,6 +311,8 @@ export default function AnalyticsDashboard() {
                                             <span className={styles.activityMeta}>
                                                 {visit.isNewVisitor && <span className={styles.newBadge}>New</span>}
                                                 <span>{visit.referer}</span>
+                                                {visit.device && <span>{visit.device}</span>}
+                                                {visit.country && <span>{visit.country}</span>}
                                                 <span>•</span>
                                                 <span>{formatTime(visit.timestamp)}</span>
                                             </span>

@@ -52,7 +52,13 @@ export async function GET(request: NextRequest) {
         }
 
         // Get referrer breakdown
-        const referrers = await redis.hgetall("analytics:referrers") || {};
+        const referrers = await redis.hgetall("analytics:sources") || {};
+        const devices = await redis.hgetall("analytics:devices") || {};
+        const countries = await redis.hgetall("analytics:countries") || {};
+        const toSorted = (h: Record<string, unknown>, key: string) =>
+            Object.entries(h)
+                .map(([name, count]) => ({ [key]: name, count: Number(count) }))
+                .sort((a, b) => b.count - a.count);
 
         // Get recent visit log (last 50)
         const recentVisits = await redis.lrange("analytics:visit-log", 0, 49);
@@ -80,9 +86,9 @@ export async function GET(request: NextRequest) {
                 views: Number(views[pageId]),
                 uniqueVisitors: uniqueCounts[pageId] || 0,
             })).sort((a, b) => b.views - a.views),
-            referrers: Object.entries(referrers)
-                .map(([source, count]) => ({ source, count: Number(count) }))
-                .sort((a, b) => b.count - a.count),
+            referrers: toSorted(referrers, "source"),
+            devices: toSorted(devices, "device"),
+            countries: toSorted(countries, "country"),
             last7Days,
             recentVisits: parsedVisits,
             generatedAt: new Date().toISOString(),

@@ -22,7 +22,9 @@ export default function AnalyticsTracker({ slug, page }: AnalyticsTrackerProps) 
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ slug, page }),
+                    // document.referrer is where the visitor came from; the Referer
+                    // header on this request is just our own page URL.
+                    body: JSON.stringify({ slug, page, referrer: document.referrer }),
                 });
             } catch (error) {
                 // Fail silently - don't impact user experience
