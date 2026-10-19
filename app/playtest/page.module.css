@@ -188,3 +188,68 @@
     border: 1px solid rgba(99, 102, 241, 0.3);
     color: #a5b4fc;
 }
+
+.whatsNew {
+    max-width: 48rem;
+    margin: 0 auto 3rem;
+}
+
+.sectionHeading {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.release {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.releaseSummary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+}
+
+.releaseName {
+    font-weight: 700;
+}
+
+.releaseDate {
+    margin-left: auto;
+    font-size: 0.85rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.markdown {
+    margin-top: 1rem;
+    color: hsl(var(--muted-foreground));
+    font-size: 0.95rem;
+    overflow-wrap: anywhere;
+}
+
+.markdown h1, .markdown h2, .markdown h3 {
+    color: hsl(var(--foreground));
+    font-size: 1.05rem;
+    margin: 1rem 0 0.4rem;
+}
+
+.markdown ul {
+    padding-left: 1.25rem;
+    list-style: disc;
+}
+
+.markdown a {
+    color: #a5b4fc;
+    text-decoration: underline;
+}
+
+.markdown code {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.25rem;
+}
