@@ -164,3 +164,17 @@
     color: #6366f1;
     transform: translateY(-2px);
 }
+/* Creative Engineering */
+.creativeGrid {
+    display: grid;
+    gap: 2rem;
+    max-width: 56rem;
+    margin: 0 auto;
+}
+
+.sectionMore {
+    text-align: center;
+    margin-top: 2rem;
+    color: #a5b4fc;
+    font-weight: 600;
+}

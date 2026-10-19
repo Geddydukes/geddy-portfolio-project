@@ -72,7 +72,7 @@ export default function Header() {
         </div>
         <nav className={`${styles.nav} ${isOpen ? styles.navOpen : ""}`}>
           <ul className={styles.navList}>
-            {["Home", "Projects", "Experience", "Skills", "Contact"].map((item, index) => (
+            {["Home", "Projects", "Creative", "Experience", "Skills", "Contact"].map((item, index) => (
               <motion.li
                 key={item}
                 initial={{ opacity: 0, y: -20 }}
@@ -91,7 +91,7 @@ export default function Header() {
               key="blog"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 5 * 0.1 }}
+              transition={{ duration: 0.5, delay: 6 * 0.1 }}
             >
               <Link href="/blog" className={styles.navButton}>
                 Blog

@@ -4,6 +4,9 @@ import ValueProposition from "@/components/value-proposition"
 import ExperienceItem from "@/components/experience-item"
 import SkillSection from "@/components/skill-section"
 import AnalyticsTracker from "@/components/analytics-tracker"
+import CreativeProjectCard from "@/components/creative-project-card"
+import Link from "next/link"
+import { creativeIntro, creativeProjects } from "@/content/creative"
 import { projects, experience, skills, me, valuePropositions, contactInfo } from "@/content/portfolio"
 import { Github, Linkedin, Mail } from "lucide-react"
 
@@ -39,6 +42,22 @@ export default function Home() {
               <FeaturedProjectCard key={index} {...project} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Creative Engineering Section */}
+      <section id="creative" className={styles.section}>
+        <div className="container">
+          <h2 className={styles.sectionTitle}>{creativeIntro.heading}</h2>
+          <p className={styles.sectionSubtitle}>{creativeIntro.body}</p>
+          <div className={styles.creativeGrid}>
+            {creativeProjects.map((project) => (
+              <CreativeProjectCard key={project.slug} {...project} />
+            ))}
+          </div>
+          <p className={styles.sectionMore}>
+            <Link href="/creative">See all creative work →</Link>
+          </p>
         </div>
       </section>
 
