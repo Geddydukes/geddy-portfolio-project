@@ -8,6 +8,7 @@ export type CreativeProject = {
     highlights: string[];
     stack: string[];
     links: { label: string; href: string }[];
+    image?: { src: string; alt: string };
     featured?: boolean;
 };
 
@@ -40,6 +41,7 @@ export const creativeProjects: CreativeProject[] = [
             { label: "Source", href: "https://github.com/Geddydukes/Pokemon-Legacy-Concord" },
             { label: "Playtest notes", href: "/playtest" },
         ],
+        image: { src: "/games/concord-title.webp", alt: "Pokémon Legacy: Concord Edition title screen showing the four regions" },
         featured: true,
     },
 ];

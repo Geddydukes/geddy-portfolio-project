@@ -21,6 +21,7 @@ export default function CreativeProjectCard({
     highlights,
     stack,
     links,
+    image,
 }: CreativeProject) {
     return (
         <motion.div
@@ -30,6 +31,10 @@ export default function CreativeProjectCard({
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
         >
+            {image && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={image.src} alt={image.alt} loading="lazy" style={{ width: "100%", height: "auto", borderRadius: "0.75rem", marginBottom: "1.5rem" }} />
+            )}
             <div className={styles.header}>
                 <span className={styles.label}>{label}</span>
                 <h3 className={styles.title}>{name}</h3>

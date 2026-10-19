@@ -9,6 +9,11 @@ export type PlaytestTag = {
     group: "type" | "region";
 };
 
+export const playtestBanner = {
+    src: "/games/concord-title.webp",
+    alt: "Pokémon Legacy: Concord Edition title screen",
+};
+
 export const playtestBuild = {
     game: "Pokémon Legacy: Concord Edition",
     version: "0.2",
