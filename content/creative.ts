@@ -9,6 +9,7 @@ export type CreativeProject = {
     stack: string[];
     links: { label: string; href: string }[];
     image?: { src: string; alt: string };
+    disclaimer?: string;
     featured?: boolean;
 };
 
@@ -42,6 +43,8 @@ export const creativeProjects: CreativeProject[] = [
             { label: "Playtest notes", href: "/playtest" },
         ],
         image: { src: "/games/concord-title.webp", alt: "Pokémon Legacy: Concord Edition title screen showing the four regions" },
+        disclaimer:
+            "Unofficial, non-commercial fan project made for fun. Not affiliated with or endorsed by Nintendo, Game Freak, Creatures Inc. or The Pokémon Company. Pokémon and its characters are trademarks of their respective owners.",
         featured: true,
     },
 ];

@@ -22,6 +22,7 @@ export default function CreativeProjectCard({
     stack,
     links,
     image,
+    disclaimer,
 }: CreativeProject) {
     return (
         <motion.div
@@ -54,6 +55,10 @@ export default function CreativeProjectCard({
                     </ul>
                 </div>
             </div>
+
+            {disclaimer && (
+                <p style={{ fontSize: "0.75rem", lineHeight: 1.5, opacity: 0.6, margin: "0 0 1.5rem" }}>{disclaimer}</p>
+            )}
 
             <div className={styles.footer}>
                 <div className={styles.stackSection}>

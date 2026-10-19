@@ -263,3 +263,13 @@
     border-radius: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+.disclaimer {
+    max-width: 48rem;
+    margin: -1rem auto 2rem;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    text-align: center;
+    color: hsl(var(--muted-foreground));
+    opacity: 0.8;
+}

@@ -9,6 +9,9 @@ export type PlaytestTag = {
     group: "type" | "region";
 };
 
+export const fanProjectDisclaimer =
+    "Unofficial, non-commercial fan project made for fun. Not affiliated with or endorsed by Nintendo, Game Freak, Creatures Inc. or The Pokémon Company. Pokémon and its characters are trademarks of their respective owners.";
+
 export const playtestBanner = {
     src: "/games/concord-title.webp",
     alt: "Pokémon Legacy: Concord Edition title screen",
