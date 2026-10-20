@@ -27,3 +27,9 @@
     max-width: 56rem;
     margin: 0 auto;
 }
+
+.back {
+    color: #a5b4fc;
+    font-weight: 600;
+    font-size: 0.95rem;
+}

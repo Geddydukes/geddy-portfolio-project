@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import CreativeProjectCard from "@/components/creative-project-card"
+import CreativeListCard from "@/components/creative-list-card"
 import AnalyticsTracker from "@/components/analytics-tracker"
 import { creativeIntro, creativeProjects } from "@/content/creative"
 import styles from "./page.module.css"
@@ -18,7 +18,7 @@ export default function CreativePage() {
                 <p className={styles.subtitle}>{creativeIntro.body}</p>
                 <div className={styles.grid}>
                     {creativeProjects.map((project) => (
-                        <CreativeProjectCard key={project.slug} {...project} />
+                        <CreativeListCard key={project.slug} {...project} />
                     ))}
                 </div>
             </section>
